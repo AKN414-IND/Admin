@@ -1,15 +1,19 @@
-import './App.css';
+// src/App.js
+
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import AdminPage from './components/admin/AdminPage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="*" element={<div>404 - Not Found</div>} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

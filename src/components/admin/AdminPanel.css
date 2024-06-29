@@ -1,0 +1,126 @@
+/* AdminPanel.css */
+
+.admin-panel {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  padding: 20px;
+  background-color: #f4f4f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.admin-panel h2, .admin-panel h3 {
+  color: #333;
+}
+
+.loader,
+.message {
+  padding: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.loader {
+  font-size: 16px;
+  color: #555;
+}
+
+.message {
+  background-color: #dff0d8;
+  color: #3c763d;
+  border: 1px solid #d6e9c6;
+  border-radius: 4px;
+}
+
+.watch-form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.watch-form input[type="text"],
+.watch-form input[type="number"],
+.watch-form textarea,
+.watch-form input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.watch-form label.checkbox-label input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.submit-button {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+
+.watch-list .watch-item {
+  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.watch-list .watch-item h4 {
+  color: #333;
+}
+
+.image-preview-container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.watch-image-preview {
+  width: 100px; /* Adjust size as needed */
+  height: auto;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+.remove-image {
+  margin-left: 10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.remove-image:hover {
+  background-color: #d32f2f;
+}
+
+.watch-actions button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-right: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.watch-actions button:hover {
+  background-color: #0056b3;
+}
