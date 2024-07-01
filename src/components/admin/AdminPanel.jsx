@@ -110,6 +110,14 @@ const AdminPanel = () => {
     setCurrentWatch({ ...watch });
   };
 
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      minimumFractionDigits: 0
+    }).format(amount);
+  };
+
   return (
     <div className="admin-panel">
       <h2>Manage Watches</h2>
@@ -157,7 +165,7 @@ const AdminPanel = () => {
           <div key={id} className="watch-item">
             <h4>{watch.brand} {watch.model}</h4>
             <p>Ref: {watch.referenceNo}</p>
-            <p>Price: {watch.cost}</p>
+            <p>Price: {formatCurrency(watch.cost)}</p>
             <div className="image-preview-container">
               {watch.images.map((img, index) => (
                 <img key={index} src={img.url} alt={`Preview of ${watch.brand} ${watch.model} ${index + 1}`} className="watch-image-preview"/>
