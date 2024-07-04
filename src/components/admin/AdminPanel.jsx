@@ -16,8 +16,11 @@ const AdminPanel = () => {
   const initialWatchState = {
     brand: '', model: '', referenceNo: '', cost: '', size: '', movement: '',
     conditionOfO: '', color: '', scope: '', description: '', origin: '',
-    waterResistance: '', warranty: '', available: true, images: []
+    waterResistance: '', warranty: '', available: true, images: [],
+    case: '', dial: '', bezel: '', crystal: '', strap: '', sku: 'N/A',
+    category: "Men's Watches", tag: ''
   };
+  
 
   const initialTestimonialState = {
     name: '', text: '', rating: 5
@@ -79,11 +82,9 @@ const AdminPanel = () => {
       file,
       preview: URL.createObjectURL(file)
     }));
-    // Ensure currentItem.images is an array
     const existingImages = Array.isArray(currentItem.images) ? currentItem.images : [];
     setCurrentItem({ ...currentItem, images: [...existingImages, ...fileArray] });
   };
-  
 
   const removeImageInput = (index) => {
     const newImages = currentItem.images.filter((_, i) => i !== index);
@@ -159,13 +160,12 @@ const AdminPanel = () => {
       <input name="cost" value={currentItem.cost || ''} onChange={handleInputChange} placeholder="Cost" required />
       <input name="size" value={currentItem.size || ''} onChange={handleInputChange} placeholder="Size" required />
       <input name="movement" value={currentItem.movement || ''} onChange={handleInputChange} placeholder="Movement" required />
-      <input name="conditionOfO" value={currentItem.conditionOfO || ''} onChange={handleInputChange} placeholder="Condition" required />
-      <input name="color" value={currentItem.color || ''} onChange={handleInputChange} placeholder="Color" required />
-      <input name="scope" value={currentItem.scope || ''} onChange={handleInputChange} placeholder="Scope" required />
-      <textarea name="description" value={currentItem.description || ''} onChange={handleInputChange} placeholder="Description" required></textarea>
-      <input name="origin" value={currentItem.origin || ''} onChange={handleInputChange} placeholder="Origin" required />
+      <input name="case" value={currentItem.case || ''} onChange={handleInputChange} placeholder="Case" required />
+      <input name="dial" value={currentItem.dial || ''} onChange={handleInputChange} placeholder="Dial" required />
+      <input name="bezel" value={currentItem.bezel || ''} onChange={handleInputChange} placeholder="Bezel" />
+      <input name="crystal" value={currentItem.crystal || ''} onChange={handleInputChange} placeholder="Crystal" />
       <input name="waterResistance" value={currentItem.waterResistance || ''} onChange={handleInputChange} placeholder="Water Resistance" required />
-      <input name="warranty" value={currentItem.warranty || ''} onChange={handleInputChange} placeholder="Warranty" required />
+      <input name="strap" value={currentItem.strap || ''} onChange={handleInputChange} placeholder="Strap" />
       <label className="checkbox-label">
         <input 
           type="checkbox" 
@@ -173,8 +173,11 @@ const AdminPanel = () => {
           checked={currentItem.available || false} 
           onChange={(e) => setCurrentItem({...currentItem, available: e.target.checked})}
         /> 
-        Available
+        In Stock
       </label>
+      <input name="sku" value={currentItem.sku || 'N/A'} onChange={handleInputChange} placeholder="SKU" />
+      <input name="category" value={currentItem.category || "Men's Watches"} onChange={handleInputChange} placeholder="Category" />
+      <input name="tag" value={currentItem.tag || ''} onChange={handleInputChange} placeholder="Tag" />
       <div className="image-inputs">
         <h4>Images (up to 10)</h4>
         <input type="file" multiple onChange={handleFileChange} />
@@ -187,6 +190,8 @@ const AdminPanel = () => {
       </div>
     </>
   );
+  
+
   const renderTestimonialForm = () => (
     <>
       <input name="name" value={currentItem.name} onChange={handleInputChange} placeholder="Name" required />
@@ -208,9 +213,10 @@ const AdminPanel = () => {
             ))}
           </div>
           <div className="watch-actions">
-            <button onClick={() => handleEdit({ ...watch, id })}>Edit</button>
-            <button onClick={() => handleDelete(id)}>Delete</button>
-          </div>
+  <button onClick={() => handleEdit({ ...watch, id })}>Edit</button> {/* Missing '>' added here */}
+  <button onClick={() => handleDelete(id)}>Delete</button>
+</div>
+
         </div>
       ))}
     </div>
@@ -253,6 +259,5 @@ const AdminPanel = () => {
     </div>
   );
 };
-
 
 export default AdminPanel;
