@@ -79,8 +79,11 @@ const AdminPanel = () => {
       file,
       preview: URL.createObjectURL(file)
     }));
-    setCurrentItem({ ...currentItem, images: [...currentItem.images, ...fileArray] });
+    // Ensure currentItem.images is an array
+    const existingImages = Array.isArray(currentItem.images) ? currentItem.images : [];
+    setCurrentItem({ ...currentItem, images: [...existingImages, ...fileArray] });
   };
+  
 
   const removeImageInput = (index) => {
     const newImages = currentItem.images.filter((_, i) => i !== index);
