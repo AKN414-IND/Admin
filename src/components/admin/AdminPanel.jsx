@@ -20,7 +20,6 @@ const AdminPanel = () => {
     case: '', dial: '', bezel: '', crystal: '', strap: '', sku: 'N/A',
     category: "Men's Watches", tag: ''
   };
-  
 
   const initialTestimonialState = {
     name: '', text: '', rating: 5
@@ -190,13 +189,12 @@ const AdminPanel = () => {
       </div>
     </>
   );
-  
 
   const renderTestimonialForm = () => (
     <>
-      <input name="name" value={currentItem.name} onChange={handleInputChange} placeholder="Name" required />
-      <textarea name="text" value={currentItem.text} onChange={handleInputChange} placeholder="Testimonial" required></textarea>
-      <input type="number" name="rating" min="1" max="5" value={currentItem.rating} onChange={handleInputChange} placeholder="Rating (1-5)" required />
+      <input name="name" value={currentItem.name || ''} onChange={handleInputChange} placeholder="Name" required />
+      <textarea name="text" value={currentItem.text || ''} onChange={handleInputChange} placeholder="Testimonial" required></textarea>
+      <input type="number" name="rating" min="1" max="5" value={currentItem.rating || 5} onChange={handleInputChange} placeholder="Rating (1-5)" required />
     </>
   );
 
@@ -208,15 +206,14 @@ const AdminPanel = () => {
           <p>Ref: {watch.referenceNo}</p>
           <p>Price: {formatCurrency(watch.cost)}</p>
           <div className="image-preview-container">
-            {watch.images.map((img, index) => (
+            {watch.images && watch.images.map((img, index) => (
               <img key={index} src={img.url} alt={`Preview of ${watch.brand} ${watch.model} ${index + 1}`} className="watch-image-preview"/>
             ))}
           </div>
           <div className="watch-actions">
-  <button onClick={() => handleEdit({ ...watch, id })}>Edit</button> {/* Missing '>' added here */}
-  <button onClick={() => handleDelete(id)}>Delete</button>
-</div>
-
+            <button onClick={() => handleEdit({ ...watch, id })}>Edit</button>
+            <button onClick={() => handleDelete(id)}>Delete</button>
+          </div>
         </div>
       ))}
     </div>
