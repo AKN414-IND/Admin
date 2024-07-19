@@ -14,10 +14,9 @@ const AdminPanel = () => {
   const [error, setError] = useState(null);
 
   const initialWatchState = {
-    brand: '', model: '', referenceNo: '', cost: '', size: '', movement: '',
-    conditionOfO: '', color: '', scope: '', description: '', origin: '',
-    waterResistance: '', warranty: '', available: true, images: [],
-    case: '', dial: '', bezel: '', crystal: '', strap: '', sku: 'N/A',
+    brand: '', model: '', cost: '', size: '', movement: '',
+    conditionOfO: '', color: '', scope: '', description: '',
+    available: true, images: [], strap: '',
     category: "Men's Watches", tag: ''
   };
 
@@ -155,16 +154,13 @@ const AdminPanel = () => {
     <>
       <input name="brand" value={currentItem.brand || ''} onChange={handleInputChange} placeholder="Brand" required />
       <input name="model" value={currentItem.model || ''} onChange={handleInputChange} placeholder="Model" required />
-      <input name="referenceNo" value={currentItem.referenceNo || ''} onChange={handleInputChange} placeholder="Reference Number" required />
       <input name="cost" value={currentItem.cost || ''} onChange={handleInputChange} placeholder="Cost" required />
       <input name="size" value={currentItem.size || ''} onChange={handleInputChange} placeholder="Size" required />
       <input name="movement" value={currentItem.movement || ''} onChange={handleInputChange} placeholder="Movement" required />
-      <input name="case" value={currentItem.case || ''} onChange={handleInputChange} placeholder="Case" required />
-      <input name="dial" value={currentItem.dial || ''} onChange={handleInputChange} placeholder="Dial" required />
-      <input name="bezel" value={currentItem.bezel || ''} onChange={handleInputChange} placeholder="Bezel" />
-      <input name="crystal" value={currentItem.crystal || ''} onChange={handleInputChange} placeholder="Crystal" />
-      <input name="waterResistance" value={currentItem.waterResistance || ''} onChange={handleInputChange} placeholder="Water Resistance" required />
-      <input name="strap" value={currentItem.strap || ''} onChange={handleInputChange} placeholder="Strap" />
+      <input name="description" value={currentItem.description || ''} onChange={handleInputChange} placeholder="Description" />
+      {/* <input name="conditionOfO" value={currentItem.conditionOfO || ''} onChange={handleInputChange} placeholder="Condition" /> */}
+      {/* <input name="color" value={currentItem.color || ''} onChange={handleInputChange} placeholder="Color" /> */}
+      {/* <input name="scope" value={currentItem.scope || ''} onChange={handleInputChange} placeholder="Scope" /> */}
       <label className="checkbox-label">
         <input 
           type="checkbox" 
@@ -174,9 +170,19 @@ const AdminPanel = () => {
         /> 
         In Stock
       </label>
-      <input name="sku" value={currentItem.sku || 'N/A'} onChange={handleInputChange} placeholder="SKU" />
-      <input name="category" value={currentItem.category || "Men's Watches"} onChange={handleInputChange} placeholder="Category" />
-      <input name="tag" value={currentItem.tag || ''} onChange={handleInputChange} placeholder="Tag" />
+      <input name="strap" value={currentItem.strap || ''} onChange={handleInputChange} placeholder="Strap" />
+      {/* <input name="sku" value={currentItem.sku || 'N/A'} onChange={handleInputChange} placeholder="SKU" /> */}
+      <select 
+  name="category" 
+  value={currentItem.category || "Men's Watches"} 
+  onChange={handleInputChange} 
+  required
+>
+  <option value="Men's Watches">Men's Watches</option>
+  <option value="Women's Watches">Women's Watches</option>
+</select>
+
+      {/* <input name="tag" value={currentItem.tag || ''} onChange={handleInputChange} placeholder="Tag" /> */}
       <div className="image-inputs">
         <h4>Images (up to 10)</h4>
         <input type="file" multiple onChange={handleFileChange} />
@@ -203,17 +209,21 @@ const AdminPanel = () => {
       {Object.entries(watches).map(([id, watch]) => (
         <div key={id} className="watch-item">
           <h4>{watch.brand} {watch.model}</h4>
-          <p>Ref: {watch.referenceNo}</p>
           <p>Price: {formatCurrency(watch.cost)}</p>
           <div className="image-preview-container">
             {watch.images && watch.images.map((img, index) => (
               <img key={index} src={img.url} alt={`Preview of ${watch.brand} ${watch.model} ${index + 1}`} className="watch-image-preview"/>
             ))}
           </div>
-          <div className="watch-actions">
-            <button onClick={() => handleEdit({ ...watch, id })}>Edit</button>
-            <button onClick={() => handleDelete(id)}>Delete</button>
-          </div>
+          <p>Size: {watch.size}</p>
+          <p>Movement: {watch.movement}</p>
+          {/* <p>Condition: {watch.conditionOfO}</p> */}
+          <p>Color: {watch.color}</p>
+          {/* <p>Scope: {watch.scope}</p> */}
+          <p>Category: {watch.category}</p>
+          {/* <p>Tag: {watch.tag}</p> */}
+          <button onClick={() => handleEdit(watch)} className="edit-button">Edit</button>
+          <button onClick={() => handleDelete(id)} className="delete-button">Delete</button>
         </div>
       ))}
     </div>
@@ -224,10 +234,10 @@ const AdminPanel = () => {
       {Object.entries(testimonials).map(([id, testimonial]) => (
         <div key={id} className="testimonial-item">
           <h4>{testimonial.name}</h4>
+          <p>Rating: {testimonial.rating}</p>
           <p>{testimonial.text}</p>
-          <p>Rating: {testimonial.rating}/5</p>
-          <button onClick={() => handleEdit({ ...testimonial, id })}>Edit</button>
-          <button onClick={() => handleDelete(id)}>Delete</button>
+          <button onClick={() => handleEdit(testimonial)} className="edit-button">Edit</button>
+          <button onClick={() => handleDelete(id)} className="delete-button">Delete</button>
         </div>
       ))}
     </div>
@@ -235,24 +245,19 @@ const AdminPanel = () => {
 
   return (
     <div className="admin-panel">
-      <h2>Admin Dashboard</h2>
-      {loading && <div className="loader">Loading...</div>}
-      {error && <div className="error">{error}</div>}
-      {message && <div className="message">{message}</div>}
-      
-      <div className="tab-buttons">
-        <button onClick={() => setActiveTab('watches')} className={activeTab === 'watches' ? 'active' : ''}>Manage Watches</button>
-        <button onClick={() => setActiveTab('testimonials')} className={activeTab === 'testimonials' ? 'active' : ''}>Manage Testimonials</button>
+      <div className="tabs">
+        <button className={activeTab === 'watches' ? 'active' : ''} onClick={() => setActiveTab('watches')}>Watches</button>
+        <button className={activeTab === 'testimonials' ? 'active' : ''} onClick={() => setActiveTab('testimonials')}>Testimonials</button>
       </div>
-
-      <form onSubmit={handleSubmit} className="item-form">
-        <h3>{currentItem.id ? `Edit ${activeTab.slice(0, -1)}` : `Add New ${activeTab.slice(0, -1)}`}</h3>
+      <form onSubmit={handleSubmit}>
         {activeTab === 'watches' ? renderWatchForm() : renderTestimonialForm()}
-        <button type="submit" className="submit-button">{currentItem.id ? 'Update' : 'Add'} {activeTab.slice(0, -1)}</button>
+        <button type="submit" className="submit-button" disabled={loading}>{loading ? 'Saving...' : 'Save'}</button>
       </form>
-
-      <h3>{activeTab === 'watches' ? 'Watch List' : 'Testimonial List'}</h3>
-      {activeTab === 'watches' ? renderWatchList() : renderTestimonialList()}
+      {message && <p className="message">{message}</p>}
+      {error && <p className="error">{error}</p>}
+      <div className="list-container">
+        {loading ? <p>Loading...</p> : (activeTab === 'watches' ? renderWatchList() : renderTestimonialList())}
+      </div>
     </div>
   );
 };
